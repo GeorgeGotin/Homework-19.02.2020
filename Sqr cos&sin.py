@@ -16,21 +16,21 @@ def polynom(x, theta):
 	for i in range(K+1):
 		result += theta[i] * m.cos(x*i)
 	for i in range(K+1,2*K+1):
-		result += theta[i] * m.sin(x*i)
+		result += theta[i] * m.sin(x*(i-K))
 	return result
 
 # Generate sample
 a, b = -3, 3
-theta = [random.uniform(-1, 1) for i in range(2*K + 1)]
+#theta = [random.uniform(-1, 1) for i in range(2*K + 1)]
 xs = [random.uniform(a, b) for i in range(N)]
-ys = [polynom(x, theta) + random.uniform(-1, 1) for x in xs]
-#ys=list(map(lambda x: 1 if x >= 0 else -1,xs))
-print(theta)
+#ys = [polynom(x, theta) + random.uniform(-1, 1) for x in xs]
+ys=list(map(lambda x: 1 if x >= 0 else -1,xs))
+#print(theta)
 plt.plot(xs, ys, "o")
 
 # Estimate theta
 
-K=2
+K=10
 
 X=[]
 for i in range(N):
@@ -38,7 +38,7 @@ for i in range(N):
 	for j in range(K+1):
 		X[i].append(m.cos(xs[i]*j))
 	for j in range(K+1,2*K+1):
-		X[i].append(m.sin(xs[i]*j))
+		X[i].append(m.sin(xs[i]*(j-K)))
 
 X = np.array(X)
 y = np.array(ys)
